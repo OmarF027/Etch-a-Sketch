@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Etch-A-Sketch</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+  }
+  #container {
+    margin: 20px auto;
+    width: 960px;
+    height: 960px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid #333;
+  }
+  .square {
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    background-color: white;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>Etch-A-Sketch</h1>
+<button id="resizeBtn">Cambia dimensione griglia</button>
+<div id="container"></div>
+
+<script>
+  const container = document.getElementById('container');
+  const btn = document.getElementById('resizeBtn');
+
+  const CONTAINER_SIZE = 960; // px
+
+  function createGrid(size) {
+    container.innerHTML = ''; // cancella griglia vecchia
+
+    const squareSize = CONTAINER_SIZE / size;
+
+    for (let i = 0; i < size * size; i++) {
+      const square = document.createElement('div');
+      square.classList.add('square');
+      square.style.width = squareSize + 'px';
+      square.style.height = squareSize + 'px';
+
+      // Evento hover: cambia colore sfondo in nero
+      square.addEventListener('mouseenter', () => {
+        square.style.backgroundColor = 'black';
+      });
+
+      container.appendChild(square);
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    let newSize = prompt('Inserisci numero di quadrati per lato (max 100):');
+    newSize = Number(newSize);
+    if (isNaN(newSize) || newSize < 1 || newSize > 100) {
+      alert('Inserisci un numero valido tra 1 e 100.');
+      return;
+    }
+    createGrid(newSize);
+  });
+
+  // Griglia iniziale 16x16
+  createGrid(16);
+</script>
+
+</body>
+</html>
